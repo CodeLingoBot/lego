@@ -39,7 +39,7 @@ type publish struct {
 	Notes   string `json:"notes"`
 }
 
-// Starts a new Dyn API Session. Authenticates using customerName, userName,
+// login starts a new Dyn API Session. Authenticates using customerName, userName,
 // password and receives a token to be used in for subsequent requests.
 func (d *DNSProvider) login() error {
 	payload := &credentials{Customer: d.config.CustomerName, User: d.config.UserName, Pass: d.config.Password}
@@ -59,7 +59,7 @@ func (d *DNSProvider) login() error {
 	return nil
 }
 
-// Destroys Dyn Session
+// logout destroys Dyn Session
 func (d *DNSProvider) logout() error {
 	if len(d.token) == 0 {
 		// nothing to do

@@ -47,6 +47,7 @@ func (e *ErrorResponse) Error() string {
 	return fmt.Sprintf("%d %s", e.Code, e.Message)
 }
 
+// getZones; 
 // https://developer.stackpath.com/en/api/dns/#operation/GetZones
 func (d *DNSProvider) getZones(domain string) (*Zone, error) {
 	domain = dns01.UnFqdn(domain)
@@ -77,6 +78,7 @@ func (d *DNSProvider) getZones(domain string) (*Zone, error) {
 	return &zones.Zones[0], nil
 }
 
+// getZoneRecords; 
 // https://developer.stackpath.com/en/api/dns/#operation/GetZoneRecords
 func (d *DNSProvider) getZoneRecords(name string, zone *Zone) ([]Record, error) {
 	u := fmt.Sprintf("/zones/%s/records", zone.ID)
@@ -102,6 +104,7 @@ func (d *DNSProvider) getZoneRecords(name string, zone *Zone) ([]Record, error) 
 	return records.Records, nil
 }
 
+// createZoneRecord; 
 // https://developer.stackpath.com/en/api/dns/#operation/CreateZoneRecord
 func (d *DNSProvider) createZoneRecord(zone *Zone, record Record) error {
 	u := fmt.Sprintf("/zones/%s/records", zone.ID)
@@ -113,6 +116,7 @@ func (d *DNSProvider) createZoneRecord(zone *Zone, record Record) error {
 	return d.do(req, nil)
 }
 
+// deleteZoneRecord; 
 // https://developer.stackpath.com/en/api/dns/#operation/DeleteZoneRecord
 func (d *DNSProvider) deleteZoneRecord(zone *Zone, record Record) error {
 	u := fmt.Sprintf("/zones/%s/records/%s", zone.ID, record.ID)

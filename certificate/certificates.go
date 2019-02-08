@@ -473,6 +473,7 @@ func checkOrderStatus(order acme.Order) (bool, error) {
 	}
 }
 
+// sanitizeDomain; 
 // https://tools.ietf.org/html/draft-ietf-acme-acme-16#section-7.1.4
 // The domain name MUST be encoded
 //   in the form in which it would appear in a certificate.  That is, it

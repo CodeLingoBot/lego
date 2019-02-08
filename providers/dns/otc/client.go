@@ -82,7 +82,7 @@ type recordSetsResponse struct {
 	RecordSets []recordSet `json:"recordsets"`
 }
 
-// Starts a new OTC API Session. Authenticates using userName, password
+// login starts a new OTC API Session. Authenticates using userName, password
 // and receives a token to be used in for subsequent requests.
 func (d *DNSProvider) login() error {
 	return d.loginRequest()

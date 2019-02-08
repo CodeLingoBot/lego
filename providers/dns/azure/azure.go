@@ -195,7 +195,7 @@ func (d *DNSProvider) CleanUp(domain, token, keyAuth string) error {
 	return nil
 }
 
-// Checks that azure has a zone for this domain name.
+// getHostedZoneID checks that azure has a zone for this domain name.
 func (d *DNSProvider) getHostedZoneID(ctx context.Context, fqdn string) (string, error) {
 	authZone, err := dns01.FindZoneByFqdn(fqdn)
 	if err != nil {
@@ -214,7 +214,7 @@ func (d *DNSProvider) getHostedZoneID(ctx context.Context, fqdn string) (string,
 	return to.String(zone.Name), nil
 }
 
-// Returns the relative record to the domain
+// toRelativeRecord returns the relative record to the domain
 func toRelativeRecord(domain, zone string) string {
 	return dns01.UnFqdn(strings.TrimSuffix(domain, zone))
 }
@@ -238,7 +238,7 @@ func getAuthorizer(config *Config) (autorest.Authorizer, error) {
 	return auth.NewAuthorizerFromEnvironment()
 }
 
-// Fetches metadata from environment or he instance metadata service
+// getMetadata fetches metadata from environment or he instance metadata service
 // borrowed from https://github.com/Microsoft/azureimds/blob/master/imdssample.go
 func getMetadata(config *Config, field string) (string, error) {
 	metadataEndpoint := config.MetadataEndpoint

@@ -26,7 +26,7 @@ type entityResponse struct {
 	Properties string `json:"properties"`
 }
 
-// Starts a new Bluecat API Session. Authenticates using customerName, userName,
+// login starts a new Bluecat API Session. Authenticates using customerName, userName,
 // password and receives a token to be used in for subsequent requests.
 func (d *DNSProvider) login() error {
 	queryArgs := map[string]string{
@@ -56,7 +56,7 @@ func (d *DNSProvider) login() error {
 	return nil
 }
 
-// Destroys Bluecat Session
+// logout destroys Bluecat Session
 func (d *DNSProvider) logout() error {
 	if len(d.token) == 0 {
 		// nothing to do
@@ -89,7 +89,7 @@ func (d *DNSProvider) logout() error {
 	return nil
 }
 
-// Lookup the entity ID of the configuration named in our properties
+// lookupConfID; the entity ID of the configuration named in our properties
 func (d *DNSProvider) lookupConfID() (uint, error) {
 	queryArgs := map[string]string{
 		"parentId": strconv.Itoa(0),
@@ -111,7 +111,7 @@ func (d *DNSProvider) lookupConfID() (uint, error) {
 	return conf.ID, nil
 }
 
-// Find the DNS view with the given name within
+// lookupViewID; Find the DNS view with the given name within
 func (d *DNSProvider) lookupViewID(viewName string) (uint, error) {
 	confID, err := d.lookupConfID()
 	if err != nil {
@@ -139,7 +139,7 @@ func (d *DNSProvider) lookupViewID(viewName string) (uint, error) {
 	return view.ID, nil
 }
 
-// Return the entityId of the parent zone by recursing from the root view
+// lookupParentZoneID; Return the entityId of the parent zone by recursing from the root view
 // Also return the simple name of the host
 func (d *DNSProvider) lookupParentZoneID(viewID uint, fqdn string) (uint, string, error) {
 	parentViewID := viewID
@@ -165,7 +165,7 @@ func (d *DNSProvider) lookupParentZoneID(viewID uint, fqdn string) (uint, string
 	return parentViewID, name, nil
 }
 
-// Get the DNS zone with the specified name under the parentId
+// getZone gets the DNS zone with the specified name under the parentId
 func (d *DNSProvider) getZone(parentID uint, name string) (uint, error) {
 	queryArgs := map[string]string{
 		"parentId": strconv.FormatUint(uint64(parentID), 10),
@@ -208,7 +208,7 @@ func (d *DNSProvider) deploy(entityID uint) error {
 	return nil
 }
 
-// Send a REST request, using query parameters specified. The Authorization
+// sendRequest; a REST request, using query parameters specified. The Authorization
 // header will be set if we have an active auth token
 func (d *DNSProvider) sendRequest(method, resource string, payload interface{}, queryArgs map[string]string) (*http.Response, error) {
 	url := fmt.Sprintf("%s/Services/REST/v1/%s", d.config.BaseURL, resource)

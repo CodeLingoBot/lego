@@ -287,7 +287,7 @@ func muxFailToGetRecordID() *http.ServeMux {
 	return mux
 }
 
-// Starts and returns a test server using a custom ip/port. Defer close() afterwards.
+// startTestServer starts and returns a test server using a custom ip/port. Defer close() afterwards.
 func startTestServer(callback muxCallback) (*httptest.Server, error) {
 	err := os.Setenv("SECRET_VEGADNS_KEY", "key")
 	if err != nil {

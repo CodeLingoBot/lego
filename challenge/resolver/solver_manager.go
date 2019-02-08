@@ -57,7 +57,7 @@ func (c *SolverManager) Remove(chlgType challenge.Type) {
 	delete(c.solvers, chlgType)
 }
 
-// Checks all challenges from the server in order and returns the first matching solver.
+// chooseSolver checks all challenges from the server in order and returns the first matching solver.
 func (c *SolverManager) chooseSolver(authz acme.Authorization) solver {
 	// Allow to have a deterministic challenge order
 	sort.Sort(byType(authz.Challenges))
